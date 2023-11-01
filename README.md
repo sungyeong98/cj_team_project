@@ -14,7 +14,6 @@
 #### src/
 
 - `data_preprocessing/`: 데이터 전처리 스크립트를 저장하는 디렉토리입니다.
-- `feature_engineering/`: 특성 공학 스크립트를 저장하는 디렉토리입니다.
 - `modeling/`: 모델 학습 및 평가 스크립트를 저장하는 디렉토리입니다.
 
 #### models/
