@@ -17,12 +17,14 @@ df = pd.read_excel(file_path)
 # Okt 객체 생성
 okt = Okt()
 
+# 명사 추출
 df['추출단어']=''
 for idx,row in df.iterrows():
     temp=okt.nouns(row['본문'])
     temp_list=[word for word in temp if len(word)>0]
     df.at[idx,'추출단어']=','.join(temp_list)
 
+# csv 파일 생성 및 저장
 new_relative_path = "../../data/processed/Okt_dataset.csv"
 new_file_path = os.path.join(script_dir, new_relative_path)
 
