@@ -6,6 +6,8 @@
 
 # 가져오는 파일 이름 변경해야함
 
+
+
 import os
 import pandas as pd
 from konlpy.tag import Okt
@@ -24,7 +26,7 @@ from data_preprocessing import preprocessing
 #df=preprocessing.prepro()[:10]
 df=preprocessing.prepro()
 
-print(df)
+
 # ----- kobart로 요약본 추출 ----- #
 #  Load Model and Tokenize
 tokenizer = PreTrainedTokenizerFast.from_pretrained("ainize/kobart-news")
@@ -33,6 +35,7 @@ model = BartForConditionalGeneration.from_pretrained("ainize/kobart-news")
 # 요약 추출
 df['summary']=''
 for idx,row in df.iterrows():
+    print(idx)
     # Encode Input Text
     input_text = row['text']
     input_ids = tokenizer.encode(input_text, return_tensors="pt")
@@ -50,6 +53,12 @@ for idx,row in df.iterrows():
     df.at[idx,'summary'] = tokenizer.decode(summary_text_ids[0], skip_special_tokens=True)
     print(df.at[idx,'summary'])
 
+n_relative_path = "../../data/result/kobart_summary.csv" 
+n_file_path = os.path.join(script_dir, n_relative_path)
+df.to_csv(n_file_path)
+
+
+'''
 # ----- Okt로 명사 추출 ----- #
 # Okt 객체 생성
 okt = Okt()
@@ -85,3 +94,4 @@ new_file_path = os.path.join(script_dir, new_relative_path)
 
 # csv 파일 저장
 df.to_csv(new_file_path)
+'''
