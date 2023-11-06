@@ -1,2 +1,8 @@
+<<<<<<< HEAD
+konlpy
+numpy
+pandas
+=======
 pandas
 keybert
+>>>>>>> a663a1ac475e6be8dbc138b4d8378759400fcfae
