@@ -35,4 +35,4 @@ script_dir = os.path.dirname(__file__)
 new_relative_path = "../../data/processed/Hannanum_dataset.csv"
 new_file_path = os.path.join(script_dir, new_relative_path)
 
-df.to_csv(new_file_path,encoding='utf-8')
+df.to_csv(new_file_path,encoding='utf-8', index=False)
