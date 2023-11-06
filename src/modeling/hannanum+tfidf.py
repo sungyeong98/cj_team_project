@@ -11,11 +11,9 @@ import os
 from konlpy.tag import Hannanum
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
-import preprocessing
-df=preprocessing.prepro()
+
 
 script_dir = os.path.dirname(__file__)
-
 # 파일의 상대 경로를 지정
 relative_path = "../../data/processed/hannanum_dataset.csv"
 
@@ -26,19 +24,12 @@ file_path = os.path.join(script_dir, relative_path)
 df = pd.read_csv(file_path)
 
 
-hannanum = Hannanum()
-
-nouns_list = []
-for i in range(len(df)):
-    text = df.iloc[i, 0]
-    nouns = hannanum.nouns(text)
-    nouns_list.append(nouns)
-
-df['Hannanum_Nouns'] = nouns_list
+# 'hannanum_nouns' 열의 각 행의 문자열을 콤마로 분리하여 리스트로 변환
+df['hannanum_nouns'] = df['hannanum_nouns'].apply(lambda x: x.split(','))
 
 # TF-IDF 벡터화
-tfidf_vectorizer = TfidfVectorizer()
-tfidf_matrix = tfidf_vectorizer.fit_transform(df['Hannanum_Nouns'].apply(lambda x: ' '.join(x)))
+tfidf_vectorizer = TfidfVectorizer()  
+tfidf_matrix = tfidf_vectorizer.fit_transform(df['hannanum_nouns'].apply(lambda x: ' '.join(x)))
 
 # 중요한 단어들을 'tfidf' 열에 추가
 important_words = tfidf_vectorizer.get_feature_names_out()
@@ -51,11 +42,17 @@ for i, row in enumerate(tfidf_matrix):
         tfidf_score = row.data[j]
         word_tfidf_mapping[i][word] = tfidf_score
 
-# 'tfidf' 열에 단어와 해당 TF-IDF 가중치를 추가
-df['tfidf'] = [word_tfidf_mapping[i] for i in range(len(df))]
 
 # TF-IDF 결과를 DataFrame 출력
-df
+# "imp_words" 열에서 콤마로 구분된 단어를 분리하고, 그 갯수에 따라 다른 갯수의 키워드 추출
+df['han_tfidf_keywords'] = df['imp_words'].apply(lambda words: list(word_tfidf_mapping[i].keys())[:len(words.split(','))])
+df['han_tfidf_scores'] = df['han_tfidf_keywords'].apply(lambda keywords: [word_tfidf_mapping[i][keyword] for keyword in keywords])
 
-df.to_csv('/content/drive/MyDrive/ai해커톤 개인/binkani_hannanum_tfidf.csv')
+
+
+
+n_script_dir = os.path.dirname(__file__)
+n_relative_path = "../../data/result/hannanum_tfidf.csv"
+n_file_path = os.path.join(n_script_dir, n_relative_path)
+df.to_csv(n_file_path, index=False)
 
