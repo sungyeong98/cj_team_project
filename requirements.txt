@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 konlpy
 numpy
-pandas
-=======
+sklearn
 pandas
 keybert
->>>>>>> a663a1ac475e6be8dbc138b4d8378759400fcfae
+scikit-learn
