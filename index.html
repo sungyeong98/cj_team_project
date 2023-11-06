@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>빈카니</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #input-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #result {
+            font-weight: bold;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h3>텍스트에 빈칸을 만들어주는 학습 보조툴 “빈카니”</h3>
+        <textarea id="input-box" rows="10" placeholder="입력할 텍스트를 입력하세요..."></textarea>
+        <button id="generate-btn">텍스트 변환</button>
+        <p>변환 결과:</p>
+        <div id="result"></div>
+    </div>
+    <script>
+        document.getElementById('generate-btn').addEventListener('click', function() {
+            var inputText = document.getElementById('input-box').value;
+            var keywords = ["키워드1", "키워드2"]; // 키워드를 원하는 것으로 대체하세요
+            for (var i = 0; i < keywords.length; i++) {
+                inputText = inputText.replace(new RegExp(keywords[i], 'g'), '( )');
+            }
+            document.getElementById('result').textContent = inputText;
+        });
+    </script>
+</body>
+</html>
