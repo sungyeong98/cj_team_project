@@ -76,8 +76,8 @@ for idx,row in df.iterrows():
         print("키워드:", kw, "점수:", score)
         kw_temp = kw_temp + ',' + str(kw)
         score_temp = score_temp + ',' +str(score)
-    df.at[idx,'YAKE']=kw_temp
-    df.at[idx,'YAKE_score']=score_temp
+    df.at[idx,'YAKE']=kw_temp[1:]
+    df.at[idx,'YAKE_score']=score_temp[1:]
 
 # csv 파일 저장
 df.to_csv(new_file_path)
