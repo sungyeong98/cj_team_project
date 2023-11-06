@@ -11,21 +11,20 @@ import pandas as pd
 from konlpy.tag import Okt
 from transformers import PreTrainedTokenizerFast, BartForConditionalGeneration
 import yake
-
+import sys
 # 현재 스크립트 파일의 디렉토리 경로를 얻음
 script_dir = os.path.dirname(__file__)
 
 # 파일의 상대 경로를 지정 & 상대 경로를 현재 스크립트 파일의 경로와 조합하여 파일 경로를 얻음
-relative_path = "../../data/raw/test_10_data.csv" 
+relative_path = "../" 
 file_path = os.path.join(script_dir, relative_path)
+sys.path.append(file_path)
+from data_preprocessing import preprocessing
 
-# 새로운 csv 파일 경로 지정 및 생성
-new_relative_path = "../../data/processed/kobart_test_dataset.csv"
-new_file_path = os.path.join(script_dir, new_relative_path)
+#df=preprocessing.prepro()[:10]
+df=preprocessing.prepro()
 
-# csv 파일을 데이터프레임으로 읽어오기
-df = pd.read_csv(file_path, encoding="utf-8")
-
+print(df)
 # ----- kobart로 요약본 추출 ----- #
 #  Load Model and Tokenize
 tokenizer = PreTrainedTokenizerFast.from_pretrained("ainize/kobart-news")
@@ -76,8 +75,13 @@ for idx,row in df.iterrows():
         print("키워드:", kw, "점수:", score)
         kw_temp = kw_temp + ',' + str(kw)
         score_temp = score_temp + ',' +str(score)
-    df.at[idx,'YAKE']=kw_temp
-    df.at[idx,'YAKE_score']=score_temp
+    df.at[idx,'YAKE']=kw_temp[1:]
+    df.at[idx,'YAKE_score']=score_temp[1:]
+
+# 새로운 csv 파일 경로 지정 및 생성
+script_dir = os.path.dirname(__file__)
+new_relative_path = "../../data/result/kobart_test_dataset.csv"
+new_file_path = os.path.join(script_dir, new_relative_path)
 
 # csv 파일 저장
 df.to_csv(new_file_path)
