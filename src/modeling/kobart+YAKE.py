@@ -4,16 +4,13 @@
 # pip install pandas
 # pip install konlpy
 
-# 가져오는 파일 이름 변경해야함
-
-
-
 import os
 import pandas as pd
 from konlpy.tag import Okt
 from transformers import PreTrainedTokenizerFast, BartForConditionalGeneration
 import yake
 import sys
+
 # 현재 스크립트 파일의 디렉토리 경로를 얻음
 script_dir = os.path.dirname(__file__)
 
@@ -53,12 +50,20 @@ for idx,row in df.iterrows():
     df.at[idx,'summary'] = tokenizer.decode(summary_text_ids[0], skip_special_tokens=True)
     print(df.at[idx,'summary'])
 
+
+""" 
+# 중간 결과 확인용
 n_relative_path = "../../data/result/kobart_summary.csv" 
 n_file_path = os.path.join(script_dir, n_relative_path)
 df.to_csv(n_file_path)
 
+script_dir = os.path.dirname(__file__)
+relative_path = "../../data/result/kobart_summary.csv"
+file_path = os.path.join(script_dir, relative_path)
 
-'''
+df=pd.read_csv(file_path)
+"""
+
 # ----- Okt로 명사 추출 ----- #
 # Okt 객체 생성
 okt = Okt()
@@ -94,4 +99,3 @@ new_file_path = os.path.join(script_dir, new_relative_path)
 
 # csv 파일 저장
 df.to_csv(new_file_path)
-'''
