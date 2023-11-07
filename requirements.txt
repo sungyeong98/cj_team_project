@@ -1,7 +1,6 @@
-
 konlpy
 numpy
 pandas
-
-pandas
 keybert
+nltk
+scikit-learn
