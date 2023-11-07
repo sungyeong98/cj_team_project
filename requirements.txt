@@ -5,3 +5,10 @@ pandas
 
 pandas
 keybert
+gensim
+
+nltk
+scikit-learn
+yake
+transformers
+torch
