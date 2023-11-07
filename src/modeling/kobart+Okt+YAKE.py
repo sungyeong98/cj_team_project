@@ -94,7 +94,7 @@ for idx,row in df.iterrows():
 
 # 새로운 csv 파일 경로 지정 및 생성
 script_dir = os.path.dirname(__file__)
-new_relative_path = "../../data/result/kobart_test_dataset.csv"
+new_relative_path = "../../data/result/kobart_dataset.csv"
 new_file_path = os.path.join(script_dir, new_relative_path)
 
 # csv 파일 저장
