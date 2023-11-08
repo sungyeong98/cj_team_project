@@ -1,13 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>flask post test</title>
+    <meta charset="UTF-8">
+    <title>bincani</title>
+    <style>
+        body {
+            background-image: url("static/images/main.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-text {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 0px;
+            border-radius: 10px;
+            width: 700px;
+            height: 200px;
+            position: absolute; /* 절대 위치 지정 */
+            bottom: 170px; /* 원하는 아래쪽 위치로 설정 */
+ }
+
+        .user-text form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-text textarea {
+            width: 700px;
+            height: 200px; /* 텍스트 입력 상자의 높이 설정 */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 20px;
+            overflow-y: auto; /* 수직 스크롤바가 필요한 경우에만 표시 */
+        }
+
+        .user-text input[type="submit"] {
+            width: 305px;
+            height: 60px; /* submit 버튼의 높이 설정 */
+            margin-top: 10px;
+            background-color: transparent;
+            color: transparent;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: absolute; /* submit 버튼에 절대 위치 지정 */
+            top: 270px; /* 원하는 위쪽 위치로 설정 */
+            left: 50%; /* 가로 가운데 정렬 */
+            transform: translateX(-50%); /* 수평 가운데 정렬 */
+        }
+
+
+    </style>
 </head>
 <body>
-<form method="post" action="/keyword">
-	<input type="text" name="user_input" value="" placeholder="input your name here">
-	<input type="submit">
-</form>
+    <div class="user-text">
+        <form method="post" action="/keyword">
+            <textarea name="user_input" placeholder="텍스트를 입력해주세요"></textarea>
+            <input type="submit" value="빈칸 생성하기">
+        </form>
+    </div>
 </body>
 </html>
