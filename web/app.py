@@ -1,25 +1,25 @@
 from flask import Flask, request, render_template
-#import os, sys
-from konlpy.tag import Okt
+import os, sys
+
+# 현재 스크립트 파일의 디렉토리 경로를 얻음
+script_dir = os.path.dirname(__file__)
+relative_path = "/" 
+file_path = os.path.join(script_dir, relative_path)
+sys.path.append(file_path)
+import get_keyword
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/")
+def hello():
+	return render_template('index.html')
+
+@app.route('/keyword', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        # 웹 폼에서 POST 요청을 처리하는 부분
-        user_input = request.form['user_input']
+    user_input = request.form.get('user_input')
+    result = get_keyword.GetKeyword(user_input)
 
-        # 모델 수행 부분 => 함수로
-        result = ''
-
-        okt = Okt()
-        noun=okt.nouns(user_input)
-        for word in noun:
-            result = result + ',' + str(word)
-
-        return f'명사추출 결과: {result[1:]}'
-    return render_template('index.html')
+    return f'결과: {result}'
 
 if __name__ == '__main__':
     app.run(debug=True)
