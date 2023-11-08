@@ -46,8 +46,8 @@ for true_words,pred_words1,pred_words2,pred_words3,pred_words4,pred_words5 in zi
     true_word=true_words.split(',')
     pred_word1=pred_words1.split(',')
     pred_word2=pred_words2.split(',')
-    pred_word3=pred_words3.split(',')
-    pred_word4=pred_words4.split(',')
+    pred_word3=','.join(pred_words3).split(',')
+    pred_word4=','.join(pred_words4).split(',')
     pred_word5=pred_words5.split(',')
 
     common1=set(true_word)&set(pred_word1)
@@ -79,18 +79,18 @@ for true_words,pred_words1,pred_words2,pred_words3,pred_words4,pred_words5 in zi
     if precision5+recall5>0:
         f1_test5+=(2*(precision5*recall5)/(precision5+recall5))
 
-f1_test1=(f1_test1/len(y_true))*100
-f1_test2=(f1_test2/len(y_true))*100
-f1_test3=(f1_test3/len(y_true))*100
-f1_test4=(f1_test4/len(y_true))*100
-f1_test5=(f1_test5/len(y_true))*100
+f1_test1=(f1_test1/len(y_true))
+f1_test2=(f1_test2/len(y_true))
+f1_test3=(f1_test3/len(y_true))
+f1_test4=(f1_test4/len(y_true))
+f1_test5=(f1_test5/len(y_true))
 
 print("# ------------------ Scikit-Learn: F1 score ---------------- #")
 print('한나눔+keybert : ',f1_test1)
 print('okt+keybert : ',f1_test2)
-print('한나눔+tfidf : ',f1_test3)
-print('okt+tfidf : ',f1_test4)
-print('kobart : ',f1_test5)
+print('한나눔+tfidf : ',"{:.10f}".format(f1_test3))
+print('okt+tfidf : ',"{:.10f}".format(f1_test4))
+print('kobart+YAKE : ',f1_test5)
 print("# ---------------------------------------------------------- #")
 
 # ------------------ Jaccard Similarity ------------------
@@ -143,11 +143,11 @@ jac_test4 = jac_test4 / len(y_true)
 jac_test5 = jac_test5 / len(y_true)
 
 print("# --------------- Jaccard Similarity ----------------------- #")
-print("한나눔+keybert:", jac_test1)
-print("okt+keybert:", jac_test2)
-print("한나눔+tfidf:", jac_test3)
-print("okt+tfidf:", jac_test4)
-print("kobart:", jac_test5)
+print("한나눔+keybert :", jac_test1)
+print("okt+keybert :", jac_test2)
+print("한나눔+tfidf :", jac_test3)
+print("okt+tfidf :", jac_test4)
+print("kobart+YAKE :", jac_test5)
 print("# ---------------------------------------------------------- #")
 
 # ------------------ Gensim: 코사인 유사도 ------------------
@@ -167,8 +167,8 @@ for true_words,pred_words1,pred_words2,pred_words3,pred_words4,pred_words5 in zi
     true_word=true_words.split(',')
     pred_word1=pred_words1.split(',')
     pred_word2=pred_words2.split(',')
-    pred_word3=pred_words3.split(',')
-    pred_word4=pred_words4.split(',')
+    pred_word3=','.join(pred_words3).split(',')
+    pred_word4=','.join(pred_words4).split(',')
     pred_word5=pred_words5.split(',')
 
     n_score1+=score_model.wv.n_similarity(true_word,pred_word1)
@@ -177,16 +177,16 @@ for true_words,pred_words1,pred_words2,pred_words3,pred_words4,pred_words5 in zi
     n_score4+=score_model.wv.n_similarity(true_word,pred_word4)
     n_score5+=score_model.wv.n_similarity(true_word,pred_word5)
 #print(score_model.wv.n_similarity(y_true[0].split(','),y_pred1[0].split(',')))
-n_score1=(n_score1/len(y_true))*100
-n_score2=(n_score2/len(y_true))*100
-n_score3=(n_score3/len(y_true))*100
-n_score4=(n_score4/len(y_true))*100
-n_score5=(n_score5/len(y_true))*100
+n_score1=(n_score1/len(y_true))
+n_score2=(n_score2/len(y_true))
+n_score3=(n_score3/len(y_true))
+n_score4=(n_score4/len(y_true))
+n_score5=(n_score5/len(y_true))
 print("# ---------------- Gensim: 코사인 유사도 ------------------- #")
 print('한나눔+keybert : ',n_score1)
 print('okt+keybert : ',n_score2)
 print('한나눔+tfidf : ',n_score3)
 print('okt+tfidf : ',n_score4)
-print('kobart : ',n_score5)
+print('kobart+YAKE : ',n_score5)
 print("# ---------------------------------------------------------- #")
 
