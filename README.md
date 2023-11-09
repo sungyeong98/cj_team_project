@@ -23,7 +23,7 @@
 
 ### 코드 흐름도
 
-<img src="https://github.com/Songhee120/cj-aihackathon-binkani/assets/81075657/11740377-cd71-4ea7-8a11-163e2012bc63">
+<img src="https://github.com/Songhee120/cj-aihackathon-binkani/assets/81075657/7b11462b-88a7-4fbb-919e-323442bf7e8b">
 
 
 ### 프로젝트 폴더 구조
