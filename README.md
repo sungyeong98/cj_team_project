@@ -1,6 +1,6 @@
 # ✏ 학습을 위한 빈칸 문제 생성툴, 빈카니
 
-<img src="https://github.com/Songhee120/cj-aihackathon-binkani/assets/81075657/ea07df1f-2a00-4c3e-9b4e-78cd39b60c5e">
+<img src="https://github.com/Songhee120/cj-aihackathon-binkani/assets/81075657/d5efd0b9-a1c0-4c6f-bc83-7c748f1245f5">
 
 <br><br>
 
