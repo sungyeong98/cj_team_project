@@ -50,7 +50,7 @@ web/
 <br>
 
 ### 모델 성능
-<image src="https://github.com/Songhee120/cj-aihackathon-binkani/assets/81075657/471b0340-dcb6-49c9-9455-8b39e705b1c6" width="50%" height="50%">
+<image src="https://github.com/Songhee120/cj-aihackathon-binkani/assets/81075657/471b0340-dcb6-49c9-9455-8b39e705b1c6">
 
 <br><br>
 
