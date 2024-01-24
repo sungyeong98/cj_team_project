@@ -24,7 +24,10 @@ df1=pd.read_csv(file_path1)     #한나눔+keybert
 df2=pd.read_csv(file_path2)     #okt+keybert
 df3=pd.read_csv(file_path3)     #한나눔+tfidf
 df4=pd.read_csv(file_path4)     #okt+tfidf
+
 df5=pd.read_csv(file_path5)     #kobart
+
+df5=pd.read_csv(file_path5)     #kobart+okt+yake
 
 y_true=df1['imp_words'].astype(str).tolist()
 y_pred1=df1['ex_words'].astype(str).tolist()
@@ -36,21 +39,12 @@ y_pred5=df5['YAKE'].astype(str).tolist()
 #y_true = []
 #y_pred = []
 
-# CSV 파일 열기
-'''
-with open(file_path1, 'r', newline='', encoding='utf-8') as csv_file:
-    csv_reader = csv.reader(csv_file)
-    
-    # 각 행을 반복하며 원하는 열의 데이터를 가져옴
-    for row in csv_reader:
-        if len(row) > -3:
-            y_true.append(row[-3])
-        if len(row) > -1:
-            y_pred.append(row[-1])
 
-y_true=y_true[1:]
-y_pred=y_pred[1:]
-'''
+# CSV 파일 열기
+
+# ------------------ Scikit-Learn: F1 score ------------------
+
+
 # ------------------ Scikit-Learn: F1 score ------------------
 
 from sklearn.metrics import f1_score
@@ -62,8 +56,13 @@ for true_words,pred_words1,pred_words2,pred_words3,pred_words4,pred_words5 in zi
     true_word=true_words.split(',')
     pred_word1=pred_words1.split(',')
     pred_word2=pred_words2.split(',')
+
     pred_word3=pred_words3.split(',')
     pred_word4=pred_words4.split(',')
+
+    pred_word3=','.join(pred_words3).split(',')
+    pred_word4=','.join(pred_words4).split(',')
+
     pred_word5=pred_words5.split(',')
 
     common1=set(true_word)&set(pred_word1)
@@ -95,6 +94,7 @@ for true_words,pred_words1,pred_words2,pred_words3,pred_words4,pred_words5 in zi
     if precision5+recall5>0:
         f1_test5+=(2*(precision5*recall5)/(precision5+recall5))
 
+
 f1_test1=(f1_test1/len(y_true))*100
 f1_test2=(f1_test2/len(y_true))*100
 f1_test3=(f1_test3/len(y_true))*100
@@ -108,61 +108,39 @@ print('kobart : ',f1_test5)
 
 # ------------------ NLTK: WordNet ------------------
 
+tokens=[word.split(',') for word in y_true]
+model=Word2Vec(tokens,min_count=1)
+model_name='gensim_score_model'
+model.save(model_name)
 
-'''
-import nltk
-nltk.download('wordnet')  # 예제 데이터 중 하나
+score_model=Word2Vec.load(model_name)
 
-# 추출된 키워드와 실제 키워드
+n_score1,n_score2,n_score3,n_score4,n_score5=0,0,0,0,0
+for true_words,pred_words1,pred_words2,pred_words3,pred_words4,pred_words5 in zip(y_true,y_pred1,y_pred2,y_pred3,y_pred4,y_pred5):
+    true_word=true_words.split(',')
+    pred_word1=pred_words1.split(',')
+    pred_word2=pred_words2.split(',')
+    pred_word3=','.join(pred_words3).split(',')
+    pred_word4=','.join(pred_words4).split(',')
+    pred_word5=pred_words5.split(',')
 
-extracted_keywords = ['keyword1', 'keyword2', ...]
-actual_keywords = ['actual_keyword1', 'actual_keyword2', ...]
-
-
-# 유사성 계산
-similarities = []
-for extracted_word in extracted_keywords:
-    extracted_synsets = wordnet.synsets(extracted_word)
-    for actual_word in actual_keywords:
-        actual_synsets = wordnet.synsets(actual_word)
-        if extracted_synsets and actual_synsets:
-            similarity = extracted_synsets[0].path_similarity(actual_synsets[0])
-            similarities.append(similarity)
-
-# 유사성 평균 계산 또는 다른 메트릭 사용
-average_similarity = sum(similarities) / len(similarities)
-
-print(f"Average Word Similarity: {average_similarity}")
-'''
-
-
-
-'''
-
-# ------------------ Gensim: 코사인 유사도 ------------------
-
-from gensim.models import Word2Vec
-from sklearn.metrics.pairwise import cosine_similarity
-
-# Gensim 모델 로드 또는 학습
-word2vec_model = Word2Vec.load('word2vec_model.bin')
-
-# 추출된 키워드와 실제 키워드 벡터 생성
-extracted_keywords = ['keyword1', 'keyword2', ...]
-actual_keywords = ['actual_keyword1', 'actual_keyword2', ...]
-
-# 키워드 벡터 추출
-extracted_keyword_vectors = [word2vec_model.wv[keyword] for keyword in extracted_keywords]
-actual_keyword_vectors = [word2vec_model.wv[keyword] for keyword in actual_keywords]
-
-# 코사인 유사성 측정
-similarity_scores = cosine_similarity(extracted_keyword_vectors, actual_keyword_vectors)
-
-# 유사성 평균 계산 또는 다른 메트릭 사용
-average_similarity = similarity_scores.mean()
-
-print(f"Average Cosine Similarity: {average_similarity}")
-
-'''
+    n_score1+=score_model.wv.n_similarity(true_word,pred_word1)
+    n_score2+=score_model.wv.n_similarity(true_word,pred_word2)
+    n_score3+=score_model.wv.n_similarity(true_word,pred_word3)
+    n_score4+=score_model.wv.n_similarity(true_word,pred_word4)
+    n_score5+=score_model.wv.n_similarity(true_word,pred_word5)
+#print(score_model.wv.n_similarity(y_true[0].split(','),y_pred1[0].split(',')))
+n_score1=(n_score1/len(y_true))
+n_score2=(n_score2/len(y_true))
+n_score3=(n_score3/len(y_true))
+n_score4=(n_score4/len(y_true))
+n_score5=(n_score5/len(y_true))
+print("# ---------------- Gensim: 코사인 유사도 ------------------- #")
+print('한나눔+keybert : ',n_score1)
+print('okt+keybert : ',n_score2)
+print('한나눔+tfidf : ',n_score3)
+print('okt+tfidf : ',n_score4)
+print('kobart+YAKE : ',n_score5)
+print("# ---------------------------------------------------------- #")
 
 

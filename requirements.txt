@@ -1,14 +1,21 @@
+nltk
+scikit-learn
 
-konlpy
-numpy
-pandas
+pip install pandas==2.1.1
+pip install torch==2.1.0
+pip install transformers==4.35.0
+pip install yake==0.4.8
+pip install konlpy==0.6.0
+pip install -U scikit-learn
+pip install gensim
+pip install nltk
 
-pandas
+
 keybert
 gensim
 
-nltk
-scikit-learn
-yake
-transformers
+
+
+
+
 torch

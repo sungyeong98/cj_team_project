@@ -1,76 +1,65 @@
-## 😏 프로젝트 구조
+# ✏ 학습을 위한 빈칸 문제 생성툴, 빈카니
 
-#### data/
+<img src="https://github.com/Songhee120/cj-aihackathon-binkani/assets/81075657/4b4ee138-ce1b-4dde-a354-ff7c89fa2ab8">
+
+
+<br><br>
+
+### 프로젝트 요약
+
+해당 프로젝트는 텍스트 요약 데이터 셋을 이용하여 중요 단어를 추출합니다.
+
+<br>
+
+### 기술 스택
+
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white">
+
+사용 모델  *tfidf, keybert, hannanum, okt, kobart* 
+
+<br>
+
+### 코드 흐름도
+
+<img src="https://github.com/Songhee120/cj-aihackathon-binkani/assets/81075657/7b11462b-88a7-4fbb-919e-323442bf7e8b">
+
+
+### 프로젝트 폴더 구조
+
+data/
 
 - `raw/`: 원본 데이터 파일을 저장하는 디렉토리입니다.
 - `processed/`: 전처리된 데이터 파일을 저장하는 디렉토리입니다.
+- `result/`: 모델링 결과 데이터 파일을 저장하는 디렉토리 입니다.
 
-#### notebooks/
-
-- 주피터 노트북 파일을 저장하는 디렉토리입니다.
-
-#### src/
+src/
 
 - `data_preprocessing/`: 데이터 전처리 스크립트를 저장하는 디렉토리입니다.
 - `modeling/`: 모델 학습 및 평가 스크립트를 저장하는 디렉토리입니다.
 
-#### models/
+models/
 
 - 학습된 모델 파일을 저장하는 디렉토리입니다.
 
-#### tests/
+web/
 
-- 테스트 스크립트 및 유닛 테스트를 저장하는 디렉토리입니다.
-
-<br>
-
-## 🤔 Git 커밋 메세지 작성 규칙
-
-### 커밋 메시지 구조
-
-커밋 메시지는 보통 다음과 같은 구조를 따릅니다: <유형>:<메세지>
-
-- `<유형>`: 커밋의 유형을 나타내며, 예를 들어 "Feat" (새로운 기능 추가), "Fix" (버그 수정), "Docs" (문서 변경) 등이 될 수 있습니다.
-- `<메시지>`: 커밋 작업에 대한 간결한 설명을 포함합니다.
-
-### 유형(Type) 목록
-
-다양한 유형을 사용하여 커밋의 의도를 명확하게 전달할 수 있습니다. 일반적인 유형은 다음과 같습니다:
-
-- `Feat`: 새로운 기능 추가
-- `Fix`: 버그 수정
-- `Docs`: 문서 변경
-- `Style`: 코드 스타일 변경 (공백, 포맷팅 등)
-- `Refactor`: 코드 리팩터링
-- `Test`: 테스트 코드 추가 또는 수정
-- `Revert`: 이전 커밋을 되돌릴 때 사용
-
-### 예시
-
-아래는 몇 가지 커밋 메시지의 예시입니다:
-
-- `Feat: 사용자 로그인 기능 추가`
-- `Fix: 메일 전송 버그 수정`
-- `Docs: API 엔드포인트 설명 업데이트`
-- `Style: 들여쓰기 수정`
-- `Refactor: 데이터 모델 구조 변경`
+- web 연결을 위한 파일을 저장하는 디렉토리입니다.
 
 <br>
 
-## 🤗 Git 브랜치 작명 규칙
+### 모델 성능
+<image src="https://github.com/Songhee120/cj-aihackathon-binkani/assets/81075657/471b0340-dcb6-49c9-9455-8b39e705b1c6">
 
-### Main 브랜치
+<br><br>
 
-- `main` 브랜치는 직접 변경하지 않으며, 다른 브랜치에서 머지된 안정적인 코드를 유지합니다.
+###  팀원 소개
 
-### Develop 브랜치
+**효원** https://github.com/12hyo12
 
-- `develop` 브랜치는 개발용 브랜치로, 최신 개발 코드를 유지합니다.
-- 새로운 기능 및 버그 수정은 일반적으로 `feature` 브랜치에서 `develop` 브랜치로 머지됩니다.
+**예지** https://github.com/Yeji-ing
 
-### Feature 브랜치
+**송희** https://github.com/Songhee120
 
-- `feature` 브랜치는 새로운 기능을 개발하기 위한 브랜치입니다.
-- `feature` 브랜치의 이름은 명확하게 해당 기능을 설명해야 합니다.
-- 이름은 소문자와 하이픈(-)으로 작성하며, 가능한 간결하고 명료하게 작성해야 합니다.
-- 예: `feature/user-authentication`, `feature/data-import`
+**선경** https://github.com/sungyon98
