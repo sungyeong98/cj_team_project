@@ -24,6 +24,9 @@ df1=pd.read_csv(file_path1)     #한나눔+keybert
 df2=pd.read_csv(file_path2)     #okt+keybert
 df3=pd.read_csv(file_path3)     #한나눔+tfidf
 df4=pd.read_csv(file_path4)     #okt+tfidf
+
+df5=pd.read_csv(file_path5)     #kobart
+
 df5=pd.read_csv(file_path5)     #kobart+okt+yake
 
 y_true=df1['imp_words'].astype(str).tolist()
@@ -36,7 +39,14 @@ y_pred5=df5['YAKE'].astype(str).tolist()
 #y_true = []
 #y_pred = []
 
+
+# CSV 파일 열기
+
 # ------------------ Scikit-Learn: F1 score ------------------
+
+
+# ------------------ Scikit-Learn: F1 score ------------------
+
 from sklearn.metrics import f1_score
 
 # F1 점수를 계산합니다.
@@ -46,8 +56,13 @@ for true_words,pred_words1,pred_words2,pred_words3,pred_words4,pred_words5 in zi
     true_word=true_words.split(',')
     pred_word1=pred_words1.split(',')
     pred_word2=pred_words2.split(',')
+
+    pred_word3=pred_words3.split(',')
+    pred_word4=pred_words4.split(',')
+
     pred_word3=','.join(pred_words3).split(',')
     pred_word4=','.join(pred_words4).split(',')
+
     pred_word5=pred_words5.split(',')
 
     common1=set(true_word)&set(pred_word1)
@@ -79,82 +94,20 @@ for true_words,pred_words1,pred_words2,pred_words3,pred_words4,pred_words5 in zi
     if precision5+recall5>0:
         f1_test5+=(2*(precision5*recall5)/(precision5+recall5))
 
-f1_test1=(f1_test1/len(y_true))
-f1_test2=(f1_test2/len(y_true))
-f1_test3=(f1_test3/len(y_true))
-f1_test4=(f1_test4/len(y_true))
-f1_test5=(f1_test5/len(y_true))
 
-print("# ------------------ Scikit-Learn: F1 score ---------------- #")
+f1_test1=(f1_test1/len(y_true))*100
+f1_test2=(f1_test2/len(y_true))*100
+f1_test3=(f1_test3/len(y_true))*100
+f1_test4=(f1_test4/len(y_true))*100
+f1_test5=(f1_test5/len(y_true))*100
 print('한나눔+keybert : ',f1_test1)
 print('okt+keybert : ',f1_test2)
-print('한나눔+tfidf : ',"{:.10f}".format(f1_test3))
-print('okt+tfidf : ',"{:.10f}".format(f1_test4))
-print('kobart+YAKE : ',f1_test5)
-print("# ---------------------------------------------------------- #")
+print('한나눔+tfidf : ',f1_test3)
+print('okt+tfidf : ',f1_test4)
+print('kobart : ',f1_test5)
 
-# ------------------ Jaccard Similarity ------------------
+# ------------------ NLTK: WordNet ------------------
 
-# Jaccard Similarity : 두 집합 A와 B가 있을 때, 이 두 집합이 얼마나 유사한지를 알려주는 척도
-jac_test1=0
-jac_test2=0
-jac_test3=0
-jac_test4=0
-jac_test5=0
-
-for i in range(len(y_true)):
-    words0 = set(y_true[i])
-    words1 = set(y_pred1[i])
-    words2 = set(y_pred2[i])
-    words3 = set(y_pred3[i])
-    words4 = set(y_pred4[i])
-    words5 = set(y_pred5[i])
-
-    intersection = words0.intersection(words1)
-    union = words0.union(words1)
-    jaccard_similarity = len(intersection) / len(union)
-    jac_test1 = jac_test1 + jaccard_similarity 
-
-    intersection = words0.intersection(words2)
-    union = words0.union(words2)
-    jaccard_similarity = len(intersection) / len(union)
-    jac_test2 = jac_test2 + jaccard_similarity 
-
-    intersection = words0.intersection(words3)
-    union = words0.union(words3)
-    jaccard_similarity = len(intersection) / len(union)
-    jac_test3 = jac_test3 + jaccard_similarity 
-
-    intersection = words0.intersection(words4)
-    union = words0.union(words4)
-    jaccard_similarity = len(intersection) / len(union)
-    jac_test4 = jac_test4 + jaccard_similarity 
-
-    intersection = words0.intersection(words5)
-    union = words0.union(words5)
-    jaccard_similarity = len(intersection) / len(union)
-    jac_test5 = jac_test5 + jaccard_similarity 
-
-
-jac_test1 = jac_test1 / len(y_true)
-jac_test2 = jac_test2 / len(y_true)
-jac_test3 = jac_test3 / len(y_true)
-jac_test4 = jac_test4 / len(y_true)
-jac_test5 = jac_test5 / len(y_true)
-
-print("# --------------- Jaccard Similarity ----------------------- #")
-print("한나눔+keybert :", jac_test1)
-print("okt+keybert :", jac_test2)
-print("한나눔+tfidf :", jac_test3)
-print("okt+tfidf :", jac_test4)
-print("kobart+YAKE :", jac_test5)
-print("# ---------------------------------------------------------- #")
-
-# ------------------ Gensim: 코사인 유사도 ------------------
-from gensim.models import Word2Vec
-from sklearn.metrics.pairwise import cosine_similarity
-
-# Gensim 모델 로드 또는 학습
 tokens=[word.split(',') for word in y_true]
 model=Word2Vec(tokens,min_count=1)
 model_name='gensim_score_model'
@@ -189,4 +142,5 @@ print('한나눔+tfidf : ',n_score3)
 print('okt+tfidf : ',n_score4)
 print('kobart+YAKE : ',n_score5)
 print("# ---------------------------------------------------------- #")
+
 
